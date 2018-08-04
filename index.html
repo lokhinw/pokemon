@@ -5,15 +5,93 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet">
   <title>Document</title>
+
+  <style>
+    body {
+      font-family: "Roboto";
+      background: #ed213a;
+      background: -webkit-linear-gradient(to right, #93291e, #ed213a);
+      background: linear-gradient(to right, #93291e, #ed213a);
+    }
+
+    .join-form {
+      background: #ffffff;
+      padding: 50px;
+      border-radius: 15px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    input {
+      border: none;
+      outline: none;
+    }
+
+    input[type="text"] {
+      display: block;
+      background: #e6e6e6;
+      margin-bottom: 10px;
+      padding: 0 30px 0 30px;
+      color: #666666;
+      font-family: "Roboto";
+      font-weight: 700;
+      border-radius: 25px;
+      width: 225px;
+      height: 50px;
+      line-height: 1.5;
+    }
+
+    input[type="submit"] {
+      background: #ED213A;
+      color: #ffffff;
+      margin-top: 30px;
+      padding: 0 25px;
+      font-family: "Montserrat";
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.5;
+      text-transform: uppercase;
+      border-radius: 25px;
+      width: 100%;
+      height: 50px;
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+
+    input[type="submit"]:hover {
+      background: #991525;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="container">
+    <form action="" class="join-form">
+      <input type="text" name="trainer-name" id="trainer-name" placeholder="Trainer Name">
+      <input type="text" name="room-code" id="room-code" placeholder="Room Code">
+      <input type="submit" id="join-room" value="Join Room">
+    </form>
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
-    var socket = io("http://localhost:3000");
-   
-
+    var socket = io();
+    $(document).ready(() => {
+      $("#join-room").click((e) => {
+        e.preventDefault()
+        socket.emit("join room", { user: $("#trainer-name").val(), room: $("#room-code").val() });
+      });
+    });
   </script>
 </body>
 
