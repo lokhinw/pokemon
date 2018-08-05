@@ -26,8 +26,12 @@ io.on("connection", socket => {
 
   socket.on("join room", (data) => {
     rooms.push(data);
+    socket.join(data.room);
+    io.to(data.room).emit("hello", "hello world!");
     console.log(`${getCurrentTime()}: ${data.user.toUpperCase()} HAS JOINED ROOM ${data.room}`);
   });
+
+
 
   socket.on("disconnect", () => {
     connections.splice(connections.indexOf(socket), 1);

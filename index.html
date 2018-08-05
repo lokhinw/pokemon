@@ -92,6 +92,11 @@
         socket.emit("join room", { user: $("#trainer-name").val(), room: $("#room-code").val() });
       });
     });
+
+    socket.on("hello", (hello) => {
+      alert(hello);
+      console.log("Hi")
+    })
   </script>
 </body>
 
