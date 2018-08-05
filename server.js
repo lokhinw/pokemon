@@ -37,7 +37,6 @@ io.on("connection", socket => {
 
   socket.on("join room", data => {
     if (!searchForRoom(data.room)) {
-      
       rooms.push(data);
       socket.join(data.room);
       console.log(
@@ -46,8 +45,11 @@ io.on("connection", socket => {
         }`
       );
     } else {
-      searchForRoom(data.room).users.push(data.users[0]);
+      if (!(searchForRoom(data.room).users.length >= 2) && searchForRoom(data.room).users[0] != data.users[0]) {
+        searchForRoom(data.room).users.push(data.users[0]);
+      }
     }
+    console.log(rooms)
     io.to(data.room).emit("hello", "hello world!");
   });
 
