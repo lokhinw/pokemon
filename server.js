@@ -1,4 +1,4 @@
-const express = require("express")
+const express = require("express");
 const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
@@ -39,24 +39,31 @@ io.on("connection", socket => {
   console.log(`${getCurrentTime()}: USER HAS CONNECTED`);
   console.log(`${getCurrentTime()}: TOTAL CONNECTIONS: ${connections.length}`);
 
-
   socket.on("join room", data => {
     if (!searchForRoom(data.room)) {
       rooms.push(data);
       socket.join(data.room);
       socket.emit("load game");
+      socket.emit("user index", "0");
       console.log(
         `${getCurrentTime()}: ${data.users[0].toUpperCase()} HAS JOINED ROOM ${
           data.room
         }`
       );
     } else {
-      if (searchForRoom(data.room).users.length <= 1 && searchForRoom(data.room).users[0] != data.users[0]) {
+      if (
+        searchForRoom(data.room).users.length <= 1 &&
+        searchForRoom(data.room).users[0] != data.users[0]
+      ) {
         searchForRoom(data.room).users.push(data.users[0]);
         socket.join(data.room);
         socket.emit("load game");
+        socket.emit("user index", "1");
+        io.to(data.room).emit("start game", searchForRoom(data.room));
       } else {
-        searchForRoom(data.room).users.length >= 2 ? socket.emit("error message", "room is full") : socket.emit("error message", "username is already taken");
+        searchForRoom(data.room).users.length >= 2
+          ? socket.emit("error message", "room is full")
+          : socket.emit("error message", "username is already taken");
       }
     }
   });

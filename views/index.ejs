@@ -1,7 +1,7 @@
 <% include partials/_header %>
 
-  <div class="form-container">
-    <form class="join-form" action="/play" method="POST">
+  <div class="form-container" action="">
+    <form class="join-form">
       <input type="text" name="trainer-name" id="trainer-name" value="test" placeholder="Trainer Name">
       <input type="text" name="room-code" id="room-code" value="1234" placeholder="Room Code">
       <input type="submit" id="join-room" value="Join Room">
@@ -9,8 +9,9 @@
   </div>
 
   <div class="game-container">
-    <p class="you"></p>
+    <p class="player1"></p>
     <img src="/images/battle-background.jpg" alt="">
+    <p class="player2"></p>
   </div>
 
 
@@ -18,7 +19,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
     let socket = io();
-    let user, room;
+    let user, userindex, room;
     $(document).ready(() => {
       $("#join-room").click((e) => {
         e.preventDefault();
@@ -36,10 +37,22 @@
       alert(msg);
     });
 
+    socket.on("user index", (index) => {
+      userindex = index
+    })
+
     socket.on("load game", () => {
       $(".form-container").remove();
       $(".game-container").css("display", "flex");
-      $(".you").text(user);
+      $(".player1").text(user);
+    });
+
+    socket.on("start game", (data) => {
+      if (userindex == 0) {
+        $(".player2").text(data.users[1]);
+      } else {
+        $(".player2").text(data.users[0]);
+      }
     });
   </script>
   <% include partials/_footer %>
