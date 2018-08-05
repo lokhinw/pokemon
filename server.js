@@ -45,8 +45,11 @@ io.on("connection", socket => {
         }`
       );
     } else {
-      if (!(searchForRoom(data.room).users.length >= 2) && searchForRoom(data.room).users[0] != data.users[0]) {
+      if (searchForRoom(data.room).users.length <= 1 && searchForRoom(data.room).users[0] != data.users[0]) {
         searchForRoom(data.room).users.push(data.users[0]);
+        socket.join(data.room);
+      } else {
+        searchForRoom(data.room).users.length >= 2 ? socket.emit("error message", "room is full") : socket.emit("error message", "username is already taken");
       }
     }
     console.log(rooms)
