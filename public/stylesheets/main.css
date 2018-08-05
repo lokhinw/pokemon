@@ -1,8 +1,6 @@
 body {
   font-family: "Roboto";
-  background: #ed213a;
-  background: -webkit-linear-gradient(to right, #93291e, #ed213a);
-  background: linear-gradient(to right, #93291e, #ed213a);
+  margin: 0;
 }
 
 .join-form {
@@ -11,10 +9,13 @@ body {
   border-radius: 15px;
 }
 
-.container {
+.form-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #ed213a;
+  background: -webkit-linear-gradient(to right, #93291e, #ed213a);
+  background: linear-gradient(to right, #93291e, #ed213a);
   height: 100vh;
 }
 
@@ -59,3 +60,31 @@ input[type="submit"] {
 input[type="submit"]:hover {
   background: #991525;
 }
+
+
+
+.game-container {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+
+/* styles for pkmn */
+
+/*  opponent pkmn
+    position: absolute;
+    right: 450px;
+    top: 350px; */
+ 
+/* your pkmn
+    position: absolute;
+    left: 350px;
+    bottom: 400px;
+*/
+
+/* battle img
+  width: 50%
+*/

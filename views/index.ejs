@@ -1,9 +1,45 @@
 <% include partials/_header %>
-<div class="container">
-  <form class="join-form" action="/play" method="POST">
-    <input type="text" name="trainer-name" id="trainer-name" value="test" placeholder="Trainer Name">
-    <input type="text" name="room-code" id="room-code" value="1234" placeholder="Room Code">
-    <input type="submit" id="join-room" value="Join Room">
-  </form>
-</div>
-<% include partials/_footer %>
+
+  <div class="form-container">
+    <form class="join-form" action="/play" method="POST">
+      <input type="text" name="trainer-name" id="trainer-name" value="test" placeholder="Trainer Name">
+      <input type="text" name="room-code" id="room-code" value="1234" placeholder="Room Code">
+      <input type="submit" id="join-room" value="Join Room">
+    </form>
+  </div>
+
+  <div class="game-container">
+    <p class="you"></p>
+    <img src="/images/battle-background.jpg" alt="">
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    let socket = io();
+    let user, room;
+    $(document).ready(() => {
+      $("#join-room").click((e) => {
+        e.preventDefault();
+        user = $("#trainer-name").val();
+        room = $("#room-code").val();
+        socket.emit("join room", { room: room, users: [user] });
+      });
+    });
+
+    socket.on("hello", (hello) => {
+      alert(hello);
+    });
+
+    socket.on("error message", (msg) => {
+      alert(msg);
+    });
+
+    socket.on("load game", () => {
+      $(".form-container").remove();
+      $(".game-container").css("display", "flex");
+      $(".you").text(user);
+    });
+  </script>
+  <% include partials/_footer %>

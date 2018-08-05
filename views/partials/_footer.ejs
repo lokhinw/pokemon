@@ -1,27 +1,4 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-  var socket = io();
-  $(document).ready(() => {
-    $("#join-room").click((e) => {
-      // e.preventDefault()
-      socket.emit("join room", { room: $("#room-code").val(), users: [$("#trainer-name").val()] });
-    });
-  });
 
-  socket.on("hello", (hello) => {
-    alert(hello);
-    console.log("Hi")
-  });
-
-  socket.on("error message", (msg) => {
-    alert(msg);
-  });
-
-  socket.on("join game", () => {
-
-  });
-</script>
 </body>
 
 </html>
