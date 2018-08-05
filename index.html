@@ -77,8 +77,8 @@
 <body>
   <div class="container">
     <form action="" class="join-form">
-      <input type="text" name="trainer-name" id="trainer-name" placeholder="Trainer Name">
-      <input type="text" name="room-code" id="room-code" placeholder="Room Code">
+      <input type="text" name="trainer-name" id="trainer-name" value="test" placeholder="Trainer Name">
+      <input type="text" name="room-code" id="room-code" value="1234" placeholder="Room Code">
       <input type="submit" id="join-room" value="Join Room">
     </form>
   </div>
@@ -89,7 +89,7 @@
     $(document).ready(() => {
       $("#join-room").click((e) => {
         e.preventDefault()
-        socket.emit("join room", { user: $("#trainer-name").val(), room: $("#room-code").val() });
+        socket.emit("join room", { room: $("#room-code").val(), users: [$("#trainer-name").val()] });
       });
     });
 
