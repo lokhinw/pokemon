@@ -18,6 +18,8 @@
     <p class="player2"></p>
   </div>
 
+  <audio id="background-music" loop src="/audio/background.mp3"></audio>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
@@ -60,6 +62,8 @@
         $(".pokemon1").attr("src", `http://www.pokestadium.com/sprites/xy/back/${data.pokemon[1]}.gif`)
         $(".pokemon2").attr("src", `http://www.pokestadium.com/sprites/xy/${data.pokemon[0]}.gif`)
       }
+      $("#background-music")[0].volume = 0.5;
+      $("#background-music")[0].play();
       console.log(data);
     });
   </script>
