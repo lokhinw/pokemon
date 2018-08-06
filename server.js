@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
+const numberToPokemon = require("./numberToPokemon");
 
 let connections = [];
 let rooms = [];
@@ -18,6 +19,16 @@ const searchForRoom = room => {
       return rooms[i];
     }
   }
+};
+
+const getPokemonName = number => {
+  return numberToPokemon[number];
+};
+
+const generatePokemon = room => {
+  searchForRoom(room).pokemon = []
+  searchForRoom(room).pokemon.push(getPokemonName(Math.floor(Math.random() * 150) + 1));
+  searchForRoom(room).pokemon.push(getPokemonName(Math.floor(Math.random() * 150) + 1));
 };
 
 app.set("view engine", "ejs");
@@ -43,8 +54,8 @@ io.on("connection", socket => {
     if (!searchForRoom(data.room)) {
       rooms.push(data);
       socket.join(data.room);
-      socket.emit("load game");
       socket.emit("user index", "0");
+      socket.emit("load game");
       console.log(
         `${getCurrentTime()}: ${data.users[0].toUpperCase()} HAS JOINED ROOM ${
           data.room
@@ -57,8 +68,9 @@ io.on("connection", socket => {
       ) {
         searchForRoom(data.room).users.push(data.users[0]);
         socket.join(data.room);
-        socket.emit("load game");
         socket.emit("user index", "1");
+        socket.emit("load game");
+        generatePokemon(data.room);
         io.to(data.room).emit("start game", searchForRoom(data.room));
       } else {
         searchForRoom(data.room).users.length >= 2

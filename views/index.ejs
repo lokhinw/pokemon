@@ -10,10 +10,13 @@
 
   <div class="game-container">
     <p class="player1"></p>
-    <img src="/images/battle-background.jpg" alt="">
+    <div class="stage-container">
+      <img class="pokemon1">
+      <img class="pokemon2">
+      <img class="stage" src="/images/stage.png" alt="">
+    </div>
     <p class="player2"></p>
   </div>
-
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -50,9 +53,15 @@
     socket.on("start game", (data) => {
       if (userindex == 0) {
         $(".player2").text(data.users[1]);
+        $(".pokemon1").attr("src", `http://www.pokestadium.com/sprites/xy/back/${data.pokemon[0]}.gif`)
+        $(".pokemon2").attr("src", `http://www.pokestadium.com/sprites/xy/${data.pokemon[1]}.gif`)
       } else {
         $(".player2").text(data.users[0]);
+        $(".pokemon1").attr("src", `http://www.pokestadium.com/sprites/xy/back/${data.pokemon[1]}.gif`)
+        $(".pokemon2").attr("src", `http://www.pokestadium.com/sprites/xy/${data.pokemon[0]}.gif`)
       }
+      console.log(data);
     });
   </script>
+
   <% include partials/_footer %>

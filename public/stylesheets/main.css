@@ -61,8 +61,6 @@ input[type="submit"]:hover {
   background: #991525;
 }
 
-
-
 .game-container {
   display: none;
   justify-content: center;
@@ -70,21 +68,23 @@ input[type="submit"]:hover {
   height: 100vh;
 }
 
+.stage-container {
+  position: relative;
+  width: 550px;
+}
 
+.stage {
+  width: 550px;
+}
 
-/* styles for pkmn */
+.pokemon1 {
+  position: absolute;
+  bottom: 20px;
+  left: 150px;
+}
 
-/*  opponent pkmn
-    position: absolute;
-    right: 450px;
-    top: 350px; */
- 
-/* your pkmn
-    position: absolute;
-    left: 350px;
-    bottom: 400px;
-*/
-
-/* battle img
-  width: 50%
-*/
+.pokemon2 {
+  position: absolute;
+  bottom: 125px;
+  right: 100px;
+}
